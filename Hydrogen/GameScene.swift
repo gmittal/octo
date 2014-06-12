@@ -38,27 +38,20 @@ class GameScene: SKScene {
         let screenCenter = CGPoint(x: 0, y: 0)
         self.backgroundColor = UIColor.whiteColor()
         
-        let myLabel = SKLabelNode(fontNamed:"HelveticaNeue-UltraLight")
-        myLabel.text = "Patternz";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:0, y:0)
-        myLabel.fontColor = UIColor.blackColor()
+        let scoreLabel = SKLabelNode(fontNamed:"HelveticaNeue-UltraLight")
+        scoreLabel.text = "0.000";
+        scoreLabel.fontSize = 55;
+        scoreLabel.position = CGPoint(x:0, y:230)
+        scoreLabel.fontColor = UIColor.blackColor()
+        self.addChild(scoreLabel)
 
-        
-    
-        
-        // The sprites for the sectors
+
         
         player.xScale = 0.5
         player.yScale = 0.5
         player.position = screenCenter
+        player.name = "player"
         self.addChild(player)
-        
-//        player.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 2)))
-        
-        
-        
-        
         
         
     }
@@ -116,59 +109,70 @@ class GameScene: SKScene {
         for touch: AnyObject in touches {
             
             let location = touch.locationInNode(self)
+            let tappedNode = nodeAtPoint(location)
             
-            let pos1:CGPoint = location
-            let pos2:CGPoint = player.position
-            
-            let deltaY:CDouble = CDouble(pos2.y) - CDouble(pos1.y)
-            let deltaX:CDouble = CDouble(pos2.x) - CDouble(pos1.x)
-            
-            let angleInDegrees = atan2(deltaY, deltaX) * 180 / M_PI
-            
-//            println(angleInDegrees)
-            
-            
-            
-            
-            if(pos1.y - pos2.y > 0)
-            {
-                if(pos1.x - pos2.x < 0)
-                {
-                    shipAngle = (90-angleInDegrees);
+            if (tappedNode.name) {
+                
+                if (tappedNode.name == "player") {
+                    
+                    
+                    let pos1:CGPoint = location
+                    let pos2:CGPoint = player.position
+                    
+                    let deltaY:CDouble = CDouble(pos2.y) - CDouble(pos1.y)
+                    let deltaX:CDouble = CDouble(pos2.x) - CDouble(pos1.x)
+                    
+                    let angleInDegrees = atan2(deltaY, deltaX) * 180 / M_PI
+                    
+                    //            println(angleInDegrees)
+                    
+                    
+                    
+                    
+                    if(pos1.y - pos2.y > 0)
+                    {
+                        if(pos1.x - pos2.x < 0)
+                        {
+                            shipAngle = (90-angleInDegrees);
+                        }
+                        else if(pos1.x - pos2.x > 0)
+                        {
+                            shipAngle = (90-angleInDegrees);
+                        }
+                    }
+                    else if(pos1.y - pos2.y < 0)
+                    {
+                        if(pos1.x - pos2.x < 0)
+                        {
+                            shipAngle = (-270-angleInDegrees);
+                        }
+                        else if(pos1.x - pos2.x > 0)
+                        {
+                            shipAngle = (90-angleInDegrees);
+                        }
+                    }
+                    
+                    if (shipAngle < 0)
+                    {
+                        shipAngle+=360;
+                    }
+                    
+                    
+                    if (shipAngle == 0) {
+                        //                shipAngle = 90;
+                    }
+                    
+                    
+                    println(shipAngle)
+                    
+                    
+                    boundsCheck(shipAngle)
                 }
-                else if(pos1.x - pos2.x > 0)
-                {
-                    shipAngle = (90-angleInDegrees);
-                }
-            }
-            else if(pos1.y - pos2.y < 0)
-            {
-                if(pos1.x - pos2.x < 0)
-                {
-                    shipAngle = (-270-angleInDegrees);
-                }
-                else if(pos1.x - pos2.x > 0)
-                {
-                    shipAngle = (90-angleInDegrees);
-                }
-            }
-            
-            if (shipAngle < 0)
-            {
-                shipAngle+=360;
-            }
-            
-            
-            if (shipAngle == 0) {
-//                shipAngle = 90;
-            }
-            
-            
-            println(shipAngle)
 
-            
-            boundsCheck(shipAngle)
-            
+                
+            } else {
+                println("NULL")
+            }
             
             
         }
