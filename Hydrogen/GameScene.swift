@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+// initialize globals
 let player = SKSpriteNode(imageNamed:"player")
 var shipAngle:CDouble = 0
 
@@ -41,7 +41,7 @@ var timeStarted:Bool = false;
 
 var time:Float = 0.0;
 
-
+// game scene class
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
