@@ -39,6 +39,9 @@ var timerDisplay:SKSpriteNode = SKSpriteNode(color: UIColor.whiteColor(), size: 
 
 var timeStarted:Bool = false;
 
+var time:Float = 0.0;
+
+
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -51,7 +54,7 @@ class GameScene: SKScene {
 //        rgba(189, 195, 199,1.0)
         
         
-        scoreLabel.text = "0.000";
+        scoreLabel.text = "0.00";
         scoreLabel.fontSize = 55;
         scoreLabel.position = CGPoint(x:-130, y:330)
         scoreLabel.fontColor = UIColor.blackColor()
@@ -343,7 +346,8 @@ class GameScene: SKScene {
                         alertView.show();
                     }
                     
-                    timeStarted = true;
+//                    timeStarted = true;
+                    NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "updateTimerLabel", userInfo: nil, repeats: true)
                     
                 }
 
@@ -357,9 +361,22 @@ class GameScene: SKScene {
     
     }
    
+    func updateTimerLabel()
+    {
+        time += 0.01
+        scoreLabel.text = NSString(format:"%.3f", time)
+    }
+    
+    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        if (timeStarted )
+//        if (timeStarted == true) {
+////            time += (1/60)
+////            scoreLabel.text = String(time)
+//        }
+        
+        
+    
         
     
     }
