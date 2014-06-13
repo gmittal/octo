@@ -82,7 +82,7 @@ class GameScene: SKScene {
     }
     
     
-    
+    // initialize color array
     
     func initColorArray() {
         for (var i = 0; i < 10; i++) {
