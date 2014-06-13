@@ -54,7 +54,7 @@ class GameScene: SKScene {
 //        rgba(189, 195, 199,1.0)
         
         
-        scoreLabel.text = "0.00";
+        scoreLabel.text = "0.000";
         scoreLabel.fontSize = 55;
         scoreLabel.position = CGPoint(x:-130, y:330)
         scoreLabel.fontColor = UIColor.blackColor()
@@ -64,6 +64,7 @@ class GameScene: SKScene {
         sectTappedLabel.text = "None";
         sectTappedLabel.fontSize = 35;
         sectTappedLabel.position = CGPoint(x:130, y:340)
+//        if (self.frame)
         sectTappedLabel.fontColor = UIColor.whiteColor()
         self.addChild(sectTappedLabel)
 
@@ -336,18 +337,29 @@ class GameScene: SKScene {
                     
                     let colorTapped:String = boundsCheck(shipAngle)
                     
+                    
+                    
+                    if (timeStarted == false) {
+                        timeStarted = true;
+                        NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "updateTimerLabel", userInfo: nil, repeats: true)
+                    }
+                    
+                    
+                    
                     if (colorList.count > 0) {
                         updateColorDisplay(colorTapped)
                     } else {
-                        var alertView = UIAlertView();
-                        alertView.addButtonWithTitle("OK");
-                        alertView.title = "Game Over";
-                        alertView.message = "You've completed all of the colors in the colorList array.";
-                        alertView.show();
+                        timeStarted = false;
+//                        var alertView = UIAlertView();
+//                        alertView.addButtonWithTitle("OK");
+//                        alertView.title = "Game Over";
+//                        alertView.message = "You've completed all of the colors in the colorList array.";
+//                        alertView.show();
                     }
                     
 //                    timeStarted = true;
-                    NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "updateTimerLabel", userInfo: nil, repeats: true)
+                    
+                    
                     
                 }
 
@@ -363,8 +375,11 @@ class GameScene: SKScene {
    
     func updateTimerLabel()
     {
-        time += 0.01
-        scoreLabel.text = NSString(format:"%.3f", time)
+        if (timeStarted == true) {
+            time += 0.01
+            scoreLabel.text = NSString(format:"%.3f", time)
+        }
+        
     }
     
     
@@ -374,6 +389,10 @@ class GameScene: SKScene {
 ////            time += (1/60)
 ////            scoreLabel.text = String(time)
 //        }
+        
+        if (colorList.count == 0) {
+            timeStarted = false;
+        }
         
         
     
