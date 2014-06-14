@@ -162,6 +162,9 @@ class GameScene: SKScene {
                 
                 println(colorList)
                 updateSectLabelFirstTime(String(colorList[0] as String))
+            } else {
+                timeStarted = false
+                gameOverTransition()
             }
         }
         
@@ -383,6 +386,18 @@ class GameScene: SKScene {
     }
     
     
+    
+    func gameOverTransition() {
+        let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 1.0)
+        
+        let scene = GameOverScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+    }
+    
+    
+    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
 //        if (timeStarted == true) {
@@ -391,9 +406,11 @@ class GameScene: SKScene {
 //        }
         
         if (colorList.count == 0) {
-            timeStarted = false;
-        }
+//            timeStarted = false;
         
+//            gameOverTransition()
+//            self.removeAllChildren()
+        }
         
     
         
@@ -403,7 +420,20 @@ class GameScene: SKScene {
 }
 
 
-
+class GameOverScene: SKScene {
+    override func didMoveToView(view: SKView) {
+        self.anchorPoint = CGPoint(x:0.5, y:0.5)
+        self.backgroundColor = UIColor(red: 0.18, green: 0.8, blue: 0.44, alpha: 1.0)
+        
+        let score = SKLabelNode(fontNamed:"HelveticaNeue-UltraLight");
+        score.position = CGPoint(x:0, y:0)
+        score.text = NSString(format:"%.2f", time)
+        score.fontSize = 100
+        self.addChild(score)
+        
+    
+    }
+}
 
 
 
