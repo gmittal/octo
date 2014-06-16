@@ -43,6 +43,18 @@ var time:Float = 0.0;
 
 var numColors:Int = 0;
 
+// colors
+let turquoise:UIColor = UIColor(red: 0.086, green: 0.63, blue: 0.52, alpha: 1.0)
+let blue:UIColor = UIColor(red: 0.161, green: 0.501, blue: 0.725, alpha: 1.0)
+let black:UIColor = UIColor(red:0.173, green:0.243, blue:0.314, alpha:1.0)
+let purple:UIColor = UIColor(red:0.557, green:0.267, blue:0.678, alpha:1.0)
+let red:UIColor = UIColor(red: 0.91, green:0.298, blue:0.235, alpha:1.0)
+let orange:UIColor = UIColor(red: 0.902, green:0.494, blue:0.133, alpha:1.0)
+let yellow:UIColor = UIColor(red: 0.945, green:0.769, blue:0.059, alpha:1.0)
+let green:UIColor = UIColor(red:0.18, green:0.8, blue:0.443, alpha: 1.0)
+
+var timer:NSTimer = NSTimer();
+
 
 // game scene class
 class GameScene: SKScene {
@@ -56,6 +68,13 @@ class GameScene: SKScene {
         self.backgroundColor = UIColor(red: 0.5, green: 0.55, blue: 0.553, alpha: 1.0)
 //        rgba(189, 195, 199,1.0)
         
+        
+        let background = SKSpriteNode(imageNamed:"background")
+        background.position = CGPoint(x:0, y:0)
+        background.xScale = 1.7
+        background.yScale = 1.7
+        background.zPosition = -1000
+//        self.addChild(background)
         
         scoreLabel.text = "0.000";
         scoreLabel.fontSize = 55;
@@ -72,8 +91,8 @@ class GameScene: SKScene {
         self.addChild(sectTappedLabel)
 
         
-        player.xScale = 0.6
-        player.yScale = 0.6
+        player.xScale = 1.2
+        player.yScale = 1.2
         player.position = screenCenter
         player.name = "player"
         self.addChild(player)
@@ -207,13 +226,18 @@ class GameScene: SKScene {
                 
                 
                 self.removeAllChildren()
+                timer.invalidate()
+                time = 0.0
+                colorList = []
                 gameOverTransition()
             }
         } else {
             self.removeAllChildren()
             timeStarted = false;
             colorList = []
-            println(colorList)
+            timer.invalidate()
+            time = 0.0
+//            println(colorList)
             presentFailureScene()
             
         }
@@ -237,36 +261,36 @@ class GameScene: SKScene {
     
     func updateSectLabelFirstTime(color:String) {
         if color == "Turquoise" {
-            colorDisplay.color = UIColor(red: 0.086, green: 0.63, blue: 0.52, alpha: 1.0)
+            colorDisplay.color = turquoise
         }
         
         if color == "Blue" {
-            colorDisplay.color = UIColor.blueColor()
+            colorDisplay.color = blue
         }
         
         if color == "Black" {
-            colorDisplay.color = UIColor.blackColor()
+            colorDisplay.color = black
         }
         
         if color == "Purple" {
-            colorDisplay.color = UIColor.purpleColor()
+            colorDisplay.color = purple
         }
         
         if color == "Red" {
-            colorDisplay.color = UIColor.redColor()
+            colorDisplay.color = red
         }
         
         if color == "Orange" {
-            colorDisplay.color = UIColor.orangeColor()
+            colorDisplay.color = orange
         }
         
         if color == "Yellow" {
-            colorDisplay.color = UIColor.yellowColor()
+            colorDisplay.color = yellow
         }
         
         if color == "Green" {
             
-            colorDisplay.color = UIColor(red: 0.18, green: 0.8, blue: 0.44, alpha: 1.0)
+            colorDisplay.color = green
         }
         
         
@@ -394,7 +418,7 @@ class GameScene: SKScene {
                     
                     if (timeStarted == false) {
                         timeStarted = true;
-                        NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "updateTimerLabel", userInfo: nil, repeats: true)
+                        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "updateTimerLabel", userInfo: nil, repeats: true)
                     }
                     
                     
@@ -493,8 +517,8 @@ class StartMenuScene:SKScene {
         self.addChild(title)
         
         let titleSprite = SKSpriteNode(imageNamed:"player")
-        titleSprite.xScale = 0.13
-        titleSprite.yScale = 0.13
+        titleSprite.xScale = 0.26
+        titleSprite.yScale = 0.26
         titleSprite.position = CGPoint(x: 105, y:136)
         titleSprite.zPosition = 1000
         self.addChild(titleSprite)
@@ -644,7 +668,7 @@ class GameFailScene: SKScene {
     }
     
     func presentStartMenu() {
-        let transition = SKTransition.crossFadeWithDuration(0.6)
+        let transition = SKTransition.revealWithDirection(SKTransitionDirection.Right, duration: 0.5)
         
         let scene = StartMenuScene(size: self.scene.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
@@ -751,7 +775,7 @@ class GameOverScene: SKScene {
     
     
     func presentStartMenu() {
-        let transition = SKTransition.crossFadeWithDuration(0.6)
+        let transition = SKTransition.revealWithDirection(SKTransitionDirection.Right, duration: 0.5)
         
         let scene = StartMenuScene(size: self.scene.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
