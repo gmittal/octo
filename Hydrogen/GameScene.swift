@@ -41,6 +41,9 @@ var timeStarted:Bool = false;
 
 var time:Float = 0.0;
 
+var numColors:Int = 0;
+
+
 // game scene class
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
@@ -85,7 +88,7 @@ class GameScene: SKScene {
     // initialize color array
     
     func initColorArray() {
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < numColors; i++) {
             var color:UInt32 = arc4random()%(8-1+1) + 1
             var colorPick:CDouble = CDouble(color)
             
@@ -166,6 +169,9 @@ class GameScene: SKScene {
                 timeStarted = false
                 gameOverTransition()
             }
+        } else {
+            presentFailureScene()
+            
         }
         
     }
@@ -388,9 +394,19 @@ class GameScene: SKScene {
     
     
     func gameOverTransition() {
-        let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 1.0)
+        let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
         
         let scene = GameOverScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+    }
+    
+    
+    func presentFailureScene() {
+        let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
+        
+        let scene = GameFailScene(size: self.scene.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene.view.presentScene(scene, transition: transition)
@@ -420,6 +436,100 @@ class GameScene: SKScene {
 }
 
 
+class StartMenuScene:SKScene {
+    override func didMoveToView(view: SKView) {
+        self.anchorPoint = CGPoint(x:0.5, y:0.5)
+        self.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+        let title = SKLabelNode(fontNamed: "Avenir Next")
+        title.text = "OCTO"
+        title.position = CGPoint(x:0, y: 100)
+        title.fontColor = UIColor.blackColor()
+        title.fontSize = 100
+        self.addChild(title)
+        
+        let titleSprite = SKSpriteNode(imageNamed:"player")
+        titleSprite.xScale = 0.13
+        titleSprite.yScale = 0.13
+        titleSprite.position = CGPoint(x: 105, y:136)
+        titleSprite.zPosition = 1000
+        self.addChild(titleSprite)
+        
+        let background = SKSpriteNode(imageNamed:"background")
+        background.position = CGPoint(x:0, y:0)
+        background.xScale = 1.7
+        background.yScale = 1.7
+        background.zPosition = -1000
+        self.addChild(background)
+        
+        let twentyFive = SKSpriteNode(imageNamed:"twentyFiveButton")
+        twentyFive.position = CGPoint(x:0, y:0)
+        twentyFive.xScale = 1.5
+        twentyFive.yScale = 1.5
+        twentyFive.name = "twentyFive"
+        self.addChild(twentyFive)
+        
+        titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
+        
+    }
+    
+    
+    func presentGameScene() {
+        let transition = SKTransition.crossFadeWithDuration(1.0)
+        
+        let scene = GameScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+        
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        /* Called when a touch begins */
+        
+        
+        
+        for touch: AnyObject in touches {
+            
+            let location = touch.locationInNode(self)
+            let tappedNode = nodeAtPoint(location)
+            
+            if (tappedNode.name == "twentyFive") {
+                numColors = 25
+                presentGameScene()
+            
+                
+            }
+            
+            
+            
+        }
+        
+    }
+
+}
+
+
+
+
+class GameFailScene: SKScene {
+    override func didMoveToView(view: SKView) {
+        self.anchorPoint = CGPoint(x:0.5, y:0.5)
+        self.backgroundColor = UIColor(red: 0.91, green: 0.3, blue: 0.235, alpha: 1.0)
+        
+        // rgba(231, 76, 60,1.0)
+        
+        let score = SKLabelNode(fontNamed:"HelveticaNeue-UltraLight");
+        score.position = CGPoint(x:0, y:0)
+        score.text = "Failed" //NSString(format:"%.2f", time)
+        score.fontSize = 150
+        self.addChild(score)
+        
+    
+    }
+}
+
+
 class GameOverScene: SKScene {
     override func didMoveToView(view: SKView) {
         self.anchorPoint = CGPoint(x:0.5, y:0.5)
@@ -428,14 +538,12 @@ class GameOverScene: SKScene {
         let score = SKLabelNode(fontNamed:"HelveticaNeue-UltraLight");
         score.position = CGPoint(x:0, y:0)
         score.text = NSString(format:"%.2f", time)
-        score.fontSize = 100
+        score.fontSize = 150
         self.addChild(score)
         
-    
+        
     }
 }
-
-
 
 
 
