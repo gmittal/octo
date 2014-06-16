@@ -181,9 +181,39 @@ class GameScene: SKScene {
                 }
                 
                 
+                if (numColors == 50) {
+                    
+                    if (NSUserDefaults.standardUserDefaults().floatForKey("fiftyHighScore") == 0.0) {
+                        NSUserDefaults.standardUserDefaults().setFloat(time, forKey: "fiftyHighScore")
+                    }
+                    
+                    if (time < NSUserDefaults.standardUserDefaults().floatForKey("fiftyHighScore")) {
+                        NSUserDefaults.standardUserDefaults().setFloat(time, forKey: "fiftyHighScore")
+                    }
+                }
+                
+                
+                if (numColors == 100) {
+                    
+                    if (NSUserDefaults.standardUserDefaults().floatForKey("hundredHighScore") == 0.0) {
+                        NSUserDefaults.standardUserDefaults().setFloat(time, forKey: "hundredHighScore")
+                    }
+                    
+                    if (time < NSUserDefaults.standardUserDefaults().floatForKey("hundredHighScore")) {
+                        NSUserDefaults.standardUserDefaults().setFloat(time, forKey: "hundredHighScore")
+                    }
+                }
+                
+                
+                
+                self.removeAllChildren()
                 gameOverTransition()
             }
         } else {
+            self.removeAllChildren()
+            timeStarted = false;
+            colorList = []
+            println(colorList)
             presentFailureScene()
             
         }
@@ -483,6 +513,20 @@ class StartMenuScene:SKScene {
         twentyFive.name = "twentyFive"
         self.addChild(twentyFive)
         
+        let fifty = SKSpriteNode(imageNamed:"fiftyButton")
+        fifty.position = CGPoint(x:0, y:-70)
+        fifty.xScale = 1.5
+        fifty.yScale = 1.5
+        fifty.name = "fifty"
+        self.addChild(fifty)
+        
+        let hundred = SKSpriteNode(imageNamed:"hundredButton")
+        hundred.position = CGPoint(x:0, y:-140)
+        hundred.xScale = 1.5
+        hundred.yScale = 1.5
+        hundred.name = "hundred"
+        self.addChild(hundred)
+        
         titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
         
     }
@@ -508,13 +552,27 @@ class StartMenuScene:SKScene {
             let location = touch.locationInNode(self)
             let tappedNode = nodeAtPoint(location)
             
-            if (tappedNode.name == "twentyFive") {
-                numColors = 25
-                presentGameScene()
-            
+            if (tappedNode.name) {
+                if (tappedNode.name == "twentyFive") {
+                    numColors = 25
+                    presentGameScene()
+                    
+                }
                 
+                
+                if (tappedNode.name == "fifty") {
+                    numColors = 50
+                    presentGameScene()
+                    
+                }
+                
+                
+                if (tappedNode.name == "hundred") {
+                    numColors = 100
+                    presentGameScene()
+                    
+                }
             }
-            
             
             
         }
@@ -539,8 +597,95 @@ class GameFailScene: SKScene {
         score.fontSize = 150
         self.addChild(score)
         
+        
+        var highScore = SKLabelNode(fontNamed:"HelveticaNeue-Bold")
+        highScore.position = CGPoint(x:0, y: -70)
+        highScore.fontSize = 50
+        
+        
+        if (numColors == 25) {
+            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("twentyFiveHighScore")
+            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+            
+        }
+        
+        if (numColors == 50) {
+            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("fiftyHighScore")
+            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+            
+        }
+        
+        
+        if (numColors == 100) {
+            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("hundredHighScore")
+            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+            
+        }
+        
+        
+        self.addChild(highScore)
+        
+        
+        
+        let exit = SKSpriteNode(imageNamed:"exitButton")
+        exit.position = CGPoint(x:0, y:-160)
+        exit.xScale = 1.5
+        exit.yScale = 1.5
+        exit.name = "exit"
+        self.addChild(exit)
+        
+        let again = SKSpriteNode(imageNamed:"againButton")
+        again.position = CGPoint(x:0, y:-230)
+        again.xScale = 1.5
+        again.yScale = 1.5
+        again.name = "again"
+        self.addChild(again)
+        
+    }
     
+    func presentStartMenu() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        
+        let scene = StartMenuScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+    }
+    
+    
+    func presentGameScene() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        
+        let scene = GameScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+        
+    }
+    
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        /* Called when a touch begins */
+        
+        
+        
+        for touch: AnyObject in touches {
+            
+            let location = touch.locationInNode(self)
+            let tappedNode = nodeAtPoint(location)
 
+            if (tappedNode.name) {
+                if (tappedNode.name == "exit") {
+                    presentStartMenu()
+                    
+                }
+                
+                if (tappedNode.name == "again") {
+                    presentGameScene()
+                }
+            }
+            
+        }
         
     }
 }
@@ -558,7 +703,7 @@ class GameOverScene: SKScene {
         self.addChild(score)
         
         
-        var highScore = SKLabelNode(fontNamed:"AvenirNext")
+        var highScore = SKLabelNode(fontNamed:"HelveticaNeue-Bold")
         highScore.position = CGPoint(x:0, y: -70)
         highScore.fontSize = 50
         
@@ -569,11 +714,85 @@ class GameOverScene: SKScene {
             
         }
         
+        if (numColors == 50) {
+            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("fiftyHighScore")
+            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+            
+        }
+        
+        
+        if (numColors == 100) {
+            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("hundredHighScore")
+            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+            
+        }
+        
         
         self.addChild(highScore)
         
         
+        let exit = SKSpriteNode(imageNamed:"exitButton")
+        exit.position = CGPoint(x:0, y:-160)
+        exit.xScale = 1.5
+        exit.yScale = 1.5
+        exit.name = "exit"
+        self.addChild(exit)
         
+        let again = SKSpriteNode(imageNamed:"againButton")
+        again.position = CGPoint(x:0, y:-230)
+        again.xScale = 1.5
+        again.yScale = 1.5
+        again.name = "again"
+        self.addChild(again)
+        
+        
+        
+    }
+    
+    
+    func presentStartMenu() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        
+        let scene = StartMenuScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+    }
+    
+    
+    func presentGameScene() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        
+        let scene = GameScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+        
+    }
+    
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        /* Called when a touch begins */
+        
+        
+        
+        for touch: AnyObject in touches {
+            
+            let location = touch.locationInNode(self)
+            let tappedNode = nodeAtPoint(location)
+            
+            if (tappedNode.name) {
+                if (tappedNode.name == "exit") {
+                    presentStartMenu()
+                    
+                }
+                
+                if (tappedNode.name == "again") {
+                    presentGameScene()
+                }
+            }
+            
+        }
         
     }
 }
