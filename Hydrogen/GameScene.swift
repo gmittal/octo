@@ -167,6 +167,20 @@ class GameScene: SKScene {
                 updateSectLabelFirstTime(String(colorList[0] as String))
             } else {
                 timeStarted = false
+                
+                // Set high score for game of 25
+                if (numColors == 25) {
+
+                    if (NSUserDefaults.standardUserDefaults().floatForKey("twentyFiveHighScore") == 0.0) {
+                        NSUserDefaults.standardUserDefaults().setFloat(time, forKey: "twentyFiveHighScore")
+                    }
+                    
+                    if (time < NSUserDefaults.standardUserDefaults().floatForKey("twentyFiveHighScore")) {
+                        NSUserDefaults.standardUserDefaults().setFloat(time, forKey: "twentyFiveHighScore")
+                    }
+                }
+                
+                
                 gameOverTransition()
             }
         } else {
@@ -475,7 +489,7 @@ class StartMenuScene:SKScene {
     
     
     func presentGameScene() {
-        let transition = SKTransition.crossFadeWithDuration(1.0)
+        let transition = SKTransition.crossFadeWithDuration(0.6)
         
         let scene = GameScene(size: self.scene.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
@@ -526,6 +540,8 @@ class GameFailScene: SKScene {
         self.addChild(score)
         
     
+
+        
     }
 }
 
@@ -540,6 +556,23 @@ class GameOverScene: SKScene {
         score.text = NSString(format:"%.2f", time)
         score.fontSize = 150
         self.addChild(score)
+        
+        
+        var highScore = SKLabelNode(fontNamed:"AvenirNext")
+        highScore.position = CGPoint(x:0, y: -70)
+        highScore.fontSize = 50
+        
+        
+        if (numColors == 25) {
+            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("twentyFiveHighScore")
+            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+            
+        }
+        
+        
+        self.addChild(highScore)
+        
+        
         
         
     }
