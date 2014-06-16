@@ -65,16 +65,17 @@ class GameScene: SKScene {
         
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         let screenCenter = CGPoint(x: 0, y: 0)
-        self.backgroundColor = UIColor(red: 0.5, green: 0.55, blue: 0.553, alpha: 1.0)
+//        self.backgroundColor = UIColor.whiteColor()
+//        self.backgroundColor = UIColor(red: 0.5, green: 0.55, blue: 0.553, alpha: 1.0)
 //        rgba(189, 195, 199,1.0)
         
         
-        let background = SKSpriteNode(imageNamed:"background")
+        let background = SKSpriteNode(imageNamed:"gameBackground")
         background.position = CGPoint(x:0, y:0)
         background.xScale = 1.7
         background.yScale = 1.7
         background.zPosition = -1000
-//        self.addChild(background)
+        self.addChild(background)
         
         scoreLabel.text = "0.000";
         scoreLabel.fontSize = 55;
@@ -227,7 +228,7 @@ class GameScene: SKScene {
                 
                 self.removeAllChildren()
                 timer.invalidate()
-                time = 0.0
+                
                 colorList = []
                 gameOverTransition()
             }
@@ -726,6 +727,8 @@ class GameOverScene: SKScene {
         score.fontSize = 150
         self.addChild(score)
         
+        // need to wipe this before proceeding
+        time = 0.0
         
         var highScore = SKLabelNode(fontNamed:"HelveticaNeue-Bold")
         highScore.position = CGPoint(x:0, y: -70)
