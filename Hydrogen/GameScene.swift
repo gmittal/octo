@@ -539,8 +539,12 @@ class GameScene: SKScene {
     
     
     func checkTimerForZen() {
-        startTime--;
-        if (startTime == 0) {
+        timeLeft++
+        println(timeLeft)
+        if (timeLeft == startTime) {
+            timeLeft = 0
+            timer.invalidate()
+            timeStarted = false
             gameOverTransition()
         }
         
@@ -569,18 +573,6 @@ class GameScene: SKScene {
     
     
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
-//        if (timeStarted == true) {
-////            time += (1/60)
-////            scoreLabel.text = String(time)
-//        }
-        
-        if (colorList.count == 0) {
-//            timeStarted = false;
-        
-//            gameOverTransition()
-//            self.removeAllChildren()
-        }
         
     
         
@@ -1147,6 +1139,9 @@ class GameFailScene: SKScene {
                     colorDisplay1Added = false;
                     colorDisplay0Added = false;
                     playerAdded = false;
+                    
+                    timeLeft = 0;
+                    
                     presentStartMenu()
                     
                 }
@@ -1157,6 +1152,9 @@ class GameFailScene: SKScene {
                     colorDisplay1Added = false;
                     colorDisplay0Added = false;
                     playerAdded = false;
+                    
+                    timeLeft = 0
+                    
                     presentGameScene()
                 }
             }
@@ -1274,6 +1272,8 @@ class GameOverScene: SKScene {
                     colorDisplay0Added = false;
                     playerAdded = false;
                     
+                    timeLeft = 0
+                    
                     presentStartMenu()
                     
                 }
@@ -1288,6 +1288,8 @@ class GameOverScene: SKScene {
                     colorDisplay1Added = false;
                     colorDisplay0Added = false;
                     playerAdded = false;
+                    
+                    timeLeft = 0
                     
                     presentGameScene()
                 }
