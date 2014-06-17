@@ -8,12 +8,11 @@
 
 import SpriteKit
 // initialize globals
-let player = SKSpriteNode(imageNamed:"player")
+
 var shipAngle:CDouble = 0
 
 // labels
-var scoreLabel = SKLabelNode(fontNamed:"HelveticaNeue-UltraLight")
-var sectTappedLabel = SKLabelNode(fontNamed:"HelveticaNeue-Bold")
+
 
 var turqBound1:CDouble = 0
 var turqBound2:CDouble = turqBound1 + 45
@@ -34,8 +33,7 @@ var greenBound2:CDouble = greenBound1 + 45
 
 var colorList:Array = [];
 
-var colorDisplay:SKSpriteNode = SKSpriteNode(color: UIColor.blackColor(), size: CGSizeMake(260, 75))
-var timerDisplay:SKSpriteNode = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(260, 75))
+
 
 var timeStarted:Bool = false;
 
@@ -54,10 +52,44 @@ let yellow:UIColor = UIColor(red: 0.945, green:0.769, blue:0.059, alpha:1.0)
 let green:UIColor = UIColor(red:0.18, green:0.8, blue:0.443, alpha: 1.0)
 
 var timer:NSTimer = NSTimer();
+var gameMode:String = String();
+
+// zen mode
+var numCorrects:Int = 0;
+var startTime = 0;
+var timeLeft = 0;
+
+
+
+var scoreLabelAdded:Bool = false;
+var sectLabelAdded:Bool = false;
+var colorDisplay1Added:Bool = false;
+var colorDisplay0Added:Bool = false;
+var playerAdded:Bool = false;
+
+var scoreLabelTag:Int = 0;
+var sectLabelTag:Int = 0;
+var colorDisplay1Tag:Int = 0;
+var colorDisplay0Tag:Int = 0;
+var playerTag:Int = 0;
 
 
 // game scene class
 class GameScene: SKScene {
+    
+    
+    // class scope objects
+    var scoreLabel = SKLabelNode(fontNamed:"HelveticaNeue-UltraLight")
+    var sectTappedLabel = SKLabelNode(fontNamed:"HelveticaNeue-Bold")
+    
+    let player = SKSpriteNode(imageNamed:"player")
+    
+    var colorDisplay:SKSpriteNode = SKSpriteNode(color: UIColor.blackColor(), size: CGSizeMake(260, 75))
+    var timerDisplay:SKSpriteNode = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(260, 75))
+    
+    
+    
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
@@ -77,11 +109,16 @@ class GameScene: SKScene {
         background.zPosition = -1000
         self.addChild(background)
         
-        scoreLabel.text = "0.000";
+        scoreLabel.text = "0";
         scoreLabel.fontSize = 55;
         scoreLabel.position = CGPoint(x:-130, y:330)
         scoreLabel.fontColor = UIColor.blackColor()
-        self.addChild(scoreLabel)
+//        scoreLabel.name = NSString(format:"%i", scoreLabel)
+        
+        if (scoreLabelAdded == false) {
+            scoreLabelAdded = true;
+            self.addChild(scoreLabel)
+        }
 
         
         sectTappedLabel.text = "None";
@@ -89,14 +126,24 @@ class GameScene: SKScene {
         sectTappedLabel.position = CGPoint(x:130, y:340)
 //        if (self.frame)
         sectTappedLabel.fontColor = UIColor.whiteColor()
-        self.addChild(sectTappedLabel)
+        sectTappedLabel.name = NSString(format:"%i", sectTappedLabel)
+        
+        if (sectLabelAdded == false) {
+            sectLabelAdded = true;
+            self.addChild(sectTappedLabel)
+        }
 
         
         player.xScale = 1.2
         player.yScale = 1.2
         player.position = screenCenter
         player.name = "player"
-        self.addChild(player)
+//        player. = playerTag
+        if (playerAdded == false) {
+            playerAdded = true
+            self.addChild(player)
+        }
+        
         
         initColorArray()
         initColorDisplay()
@@ -185,6 +232,12 @@ class GameScene: SKScene {
                 
                 println(colorList)
                 updateSectLabelFirstTime(String(colorList[0] as String))
+                
+                if (gameMode == "Zen") {
+                    numCorrects++;
+                    updateTimerLabel()
+                }
+                
             } else {
                 timeStarted = false
                 
@@ -226,18 +279,19 @@ class GameScene: SKScene {
                 
                 
                 
-                self.removeAllChildren()
+//                self.removeAllChildren()
                 timer.invalidate()
                 
                 colorList = []
                 gameOverTransition()
             }
         } else {
-            self.removeAllChildren()
+//            self.removeAllChildren()
             timeStarted = false;
             colorList = []
             timer.invalidate()
             time = 0.0
+            numCorrects = 0
 //            println(colorList)
             presentFailureScene()
             
@@ -248,10 +302,19 @@ class GameScene: SKScene {
     
     func initColorDisplay() {
         colorDisplay.position = CGPoint(x:130, y:350)
-        self.addChild(colorDisplay)
+        colorDisplay.name = NSString(format:"%i", colorDisplay0Tag)
+        if (colorDisplay0Added == false) {
+            colorDisplay0Added = true;
+            self.addChild(colorDisplay)
+        }
         
         timerDisplay.position = CGPoint(x:-130, y:350)
-        self.addChild(timerDisplay)
+        timerDisplay.name = NSString(format:"%i", colorDisplay1Tag)
+        if (colorDisplay1Added == false) {
+            colorDisplay1Added = true
+            self.addChild(timerDisplay)
+        }
+        
         
     }
     
@@ -416,10 +479,18 @@ class GameScene: SKScene {
                     let colorTapped:String = boundsCheck(shipAngle)
                     
                     
+                    if (gameMode == "Classic") {
+                        if (timeStarted == false) {
+                            timeStarted = true;
+                            timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "updateTimerLabel", userInfo: nil, repeats: true)
+                        }
+                    }
                     
-                    if (timeStarted == false) {
-                        timeStarted = true;
-                        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "updateTimerLabel", userInfo: nil, repeats: true)
+                    if (gameMode == "Zen") {
+                        if (timeStarted == false) {
+                            timeStarted = true;
+                            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "checkTimerForZen", userInfo: nil, repeats: true)
+                        }
                     }
                     
                     
@@ -453,13 +524,27 @@ class GameScene: SKScene {
    
     func updateTimerLabel()
     {
-        if (timeStarted == true) {
-            time += 0.01
-            scoreLabel.text = NSString(format:"%.3f", time)
+        if (gameMode == "Classic") {
+            if (timeStarted == true) {
+                time += 0.01
+                scoreLabel.text = NSString(format:"%.3f", time)
+            }
+        }
+        
+        if (gameMode == "Zen") {
+            scoreLabel.text = NSString(format:"%i", numCorrects)
         }
         
     }
     
+    
+    func checkTimerForZen() {
+        startTime--;
+        if (startTime == 0) {
+            gameOverTransition()
+        }
+        
+    }
     
     
     func gameOverTransition() {
@@ -505,7 +590,8 @@ class GameScene: SKScene {
 }
 
 
-class StartMenuScene:SKScene {
+
+class ZenMenuScene:SKScene {
     override func didMoveToView(view: SKView) {
         self.anchorPoint = CGPoint(x:0.5, y:0.5)
         self.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -524,6 +610,7 @@ class StartMenuScene:SKScene {
         titleSprite.zPosition = 1000
         self.addChild(titleSprite)
         
+        
         let background = SKSpriteNode(imageNamed:"background")
         background.position = CGPoint(x:0, y:0)
         background.xScale = 1.7
@@ -531,28 +618,203 @@ class StartMenuScene:SKScene {
         background.zPosition = -1000
         self.addChild(background)
         
+        
+        
+        let twentyFive = SKSpriteNode(imageNamed:"fifteenSec")
+        twentyFive.position = CGPoint(x:0, y:-1000)
+        twentyFive.xScale = 1.5
+        twentyFive.yScale = 1.5
+        twentyFive.name = "fifteen"
+        self.addChild(twentyFive)
+        
+        let fifty = SKSpriteNode(imageNamed:"thirtySec")
+        fifty.position = CGPoint(x:0, y:-1070)
+        fifty.xScale = 1.5
+        fifty.yScale = 1.5
+        fifty.name = "thirty"
+        self.addChild(fifty)
+        
+        let hundred = SKSpriteNode(imageNamed:"fortyFiveSec")
+        hundred.position = CGPoint(x:0, y:-1140)
+        hundred.xScale = 1.5
+        hundred.yScale = 1.5
+        hundred.name = "fortyFive"
+        self.addChild(hundred)
+        
+        
+        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
+        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
+        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+        
+        titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
+        
+        
+        
+        
+        //gesture recognizers
+        var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+    }
+    
+    
+    func presentGameScene() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        
+        let scene = GameScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+        
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        /* Called when a touch begins */
+        
+        
+        
+        for touch: AnyObject in touches {
+            
+            let location = touch.locationInNode(self)
+            let tappedNode = nodeAtPoint(location)
+            
+            if (tappedNode.name) {
+                if (tappedNode.name == "fifteen") {
+                    numColors = 300
+                    startTime = 15;
+                    gameMode = "Zen"
+                    presentGameScene()
+                    println("Fifteen")
+                    
+                }
+                
+                
+                if (tappedNode.name == "thirty") {
+                    numColors = 300
+                    startTime = 30
+                    gameMode = "Zen"
+                    presentGameScene()
+                    println("Thirty")
+                    
+                }
+                
+                
+                if (tappedNode.name == "fortyFive") {
+                    numColors = 300
+                    startTime = 45
+                    gameMode = "Zen"
+                    presentGameScene()
+                    println("Forty Five")
+                }
+            }
+            
+            
+        }
+        
+    }
+    
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.Right:
+                println("Swiped right")
+            case UISwipeGestureRecognizerDirection.Left:
+                println("Swiped left")
+            default:
+                break
+            }
+        }
+    }
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+class ClassicMenuScene:SKScene {
+    override func didMoveToView(view: SKView) {
+        self.anchorPoint = CGPoint(x:0.5, y:0.5)
+        self.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+        let title = SKLabelNode(fontNamed: "Avenir Next")
+        title.text = "OCTO"
+        title.position = CGPoint(x:0, y: 100)
+        title.fontColor = UIColor.blackColor()
+        title.fontSize = 100
+        self.addChild(title)
+        
+        let titleSprite = SKSpriteNode(imageNamed:"player")
+        titleSprite.xScale = 0.26
+        titleSprite.yScale = 0.26
+        titleSprite.position = CGPoint(x: 105, y:136)
+        titleSprite.zPosition = 1000
+        self.addChild(titleSprite)
+        
+        
+        let background = SKSpriteNode(imageNamed:"background")
+        background.position = CGPoint(x:0, y:0)
+        background.xScale = 1.7
+        background.yScale = 1.7
+        background.zPosition = -1000
+        self.addChild(background)
+        
+        
+        
         let twentyFive = SKSpriteNode(imageNamed:"twentyFiveButton")
-        twentyFive.position = CGPoint(x:0, y:0)
+        twentyFive.position = CGPoint(x:0, y:-1000)
         twentyFive.xScale = 1.5
         twentyFive.yScale = 1.5
         twentyFive.name = "twentyFive"
         self.addChild(twentyFive)
         
         let fifty = SKSpriteNode(imageNamed:"fiftyButton")
-        fifty.position = CGPoint(x:0, y:-70)
+        fifty.position = CGPoint(x:0, y:-1070)
         fifty.xScale = 1.5
         fifty.yScale = 1.5
         fifty.name = "fifty"
         self.addChild(fifty)
         
         let hundred = SKSpriteNode(imageNamed:"hundredButton")
-        hundred.position = CGPoint(x:0, y:-140)
+        hundred.position = CGPoint(x:0, y:-1140)
         hundred.xScale = 1.5
         hundred.yScale = 1.5
         hundred.name = "hundred"
         self.addChild(hundred)
         
+        
+        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
+        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
+        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+        
         titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
+        
+        
+        
+        
+        //gesture recognizers
+        var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(swipeLeft)
         
     }
     
@@ -580,6 +842,7 @@ class StartMenuScene:SKScene {
             if (tappedNode.name) {
                 if (tappedNode.name == "twentyFive") {
                     numColors = 25
+                    gameMode = "Classic"
                     presentGameScene()
                     
                 }
@@ -587,6 +850,7 @@ class StartMenuScene:SKScene {
                 
                 if (tappedNode.name == "fifty") {
                     numColors = 50
+                    gameMode = "Classic"
                     presentGameScene()
                     
                 }
@@ -594,6 +858,7 @@ class StartMenuScene:SKScene {
                 
                 if (tappedNode.name == "hundred") {
                     numColors = 100
+                    gameMode = "Classic"
                     presentGameScene()
                     
                 }
@@ -603,6 +868,182 @@ class StartMenuScene:SKScene {
         }
         
     }
+    
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.Right:
+                println("Swiped right")
+            case UISwipeGestureRecognizerDirection.Left:
+                println("Swiped left")
+            default:
+                break
+            }
+        }
+    }
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+class StartMenuScene:SKScene {
+    override func didMoveToView(view: SKView) {
+        self.anchorPoint = CGPoint(x:0.5, y:0.5)
+        self.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+        let title = SKLabelNode(fontNamed: "Avenir Next")
+        title.text = "OCTO"
+        title.position = CGPoint(x:0, y: 100)
+        title.fontColor = UIColor.blackColor()
+        title.fontSize = 100
+        self.addChild(title)
+        
+        let titleSprite = SKSpriteNode(imageNamed:"player")
+        titleSprite.xScale = 0.26
+        titleSprite.yScale = 0.26
+        titleSprite.position = CGPoint(x: 105, y:136)
+        titleSprite.zPosition = 1000
+        self.addChild(titleSprite)
+        
+        
+        let background = SKSpriteNode(imageNamed:"background")
+        background.position = CGPoint(x:0, y:0)
+        background.xScale = 1.7
+        background.yScale = 1.7
+        background.zPosition = -1000
+        self.addChild(background)
+        
+        let twentyFive = SKSpriteNode(imageNamed:"classicButton")
+        twentyFive.position = CGPoint(x:0, y:-1000)
+        twentyFive.xScale = 1.5
+        twentyFive.yScale = 1.5
+        twentyFive.name = "classic"
+        self.addChild(twentyFive)
+        
+        let fifty = SKSpriteNode(imageNamed:"zenButton")
+        fifty.position = CGPoint(x:0, y:-1070)
+        fifty.xScale = 1.5
+        fifty.yScale = 1.5
+        fifty.name = "zen"
+        self.addChild(fifty)
+        
+        let hundred = SKSpriteNode(imageNamed:"stressButton")
+        hundred.position = CGPoint(x:0, y:-1140)
+        hundred.xScale = 1.5
+        hundred.yScale = 1.5
+        hundred.name = "stress"
+        self.addChild(hundred)
+        
+
+        
+        
+        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
+        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
+        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+        
+        titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
+        
+        
+        
+        
+        //gesture recognizers
+        var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+    }
+    
+    
+    func presentGameScene() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        
+        let scene = ClassicMenuScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+        
+    }
+    
+    
+    func zenGameScene() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        
+        let scene = ZenMenuScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+        
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        /* Called when a touch begins */
+        
+        
+        
+        for touch: AnyObject in touches {
+            
+            let location = touch.locationInNode(self)
+            let tappedNode = nodeAtPoint(location)
+            
+            if (tappedNode.name) {
+                if (tappedNode.name == "classic") {
+//                    numColors = 25
+                    presentGameScene()
+                    
+                }
+                
+                
+                if (tappedNode.name == "zen") {
+//                    numColors = 50
+                    zenGameScene()
+                    println("Zen")
+                }
+                
+                
+                if (tappedNode.name == "stress") {
+//                    numColors = 100
+//                    presentGameScene()
+                    
+                }
+            }
+            
+            
+        }
+        
+    }
+    
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.Right:
+                println("Swiped right")
+            case UISwipeGestureRecognizerDirection.Left:
+                println("Swiped left")
+            default:
+                break
+            }
+        }
+    }
+    
+    
+    
 
 }
 
@@ -701,11 +1142,21 @@ class GameFailScene: SKScene {
 
             if (tappedNode.name) {
                 if (tappedNode.name == "exit") {
+                    scoreLabelAdded = false;
+                    sectLabelAdded = false;
+                    colorDisplay1Added = false;
+                    colorDisplay0Added = false;
+                    playerAdded = false;
                     presentStartMenu()
                     
                 }
                 
                 if (tappedNode.name == "again") {
+                    scoreLabelAdded = false;
+                    sectLabelAdded = false;
+                    colorDisplay1Added = false;
+                    colorDisplay0Added = false;
+                    playerAdded = false;
                     presentGameScene()
                 }
             }
@@ -723,12 +1174,17 @@ class GameOverScene: SKScene {
         
         let score = SKLabelNode(fontNamed:"HelveticaNeue-UltraLight");
         score.position = CGPoint(x:0, y:0)
-        score.text = NSString(format:"%.2f", time)
+        if (gameMode == "Classic") {
+            score.text = NSString(format:"%.2f", time)
+        } else if (gameMode == "Zen") {
+            score.text = NSString(format:"%.i", numCorrects)
+        }
         score.fontSize = 150
         self.addChild(score)
         
         // need to wipe this before proceeding
         time = 0.0
+        numCorrects = 0
         
         var highScore = SKLabelNode(fontNamed:"HelveticaNeue-Bold")
         highScore.position = CGPoint(x:0, y: -70)
@@ -810,11 +1266,29 @@ class GameOverScene: SKScene {
             
             if (tappedNode.name) {
                 if (tappedNode.name == "exit") {
+//                    scoreLabel.removeFromParent()
+                    self.removeAllChildren()
+                    scoreLabelAdded = false;
+                    sectLabelAdded = false;
+                    colorDisplay1Added = false;
+                    colorDisplay0Added = false;
+                    playerAdded = false;
+                    
                     presentStartMenu()
                     
                 }
                 
                 if (tappedNode.name == "again") {
+//                    scoreLabel.removeFromParent()
+                    self.removeAllChildren()
+                    
+                    
+                    scoreLabelAdded = false;
+                    sectLabelAdded = false;
+                    colorDisplay1Added = false;
+                    colorDisplay0Added = false;
+                    playerAdded = false;
+                    
                     presentGameScene()
                 }
             }
