@@ -11,6 +11,10 @@ import SpriteKit
 
 var shipAngle:CDouble = 0
 
+
+
+
+
 // labels
 
 
@@ -78,6 +82,9 @@ var playerTag:Int = 0;
 class GameScene: SKScene {
     
     
+    
+    
+    
     // class scope objects
     var scoreLabel = SKLabelNode(fontNamed:"HelveticaNeue-UltraLight")
     var sectTappedLabel = SKLabelNode(fontNamed:"HelveticaNeue-Bold")
@@ -87,13 +94,21 @@ class GameScene: SKScene {
     var colorDisplay:SKSpriteNode = SKSpriteNode(color: UIColor.blackColor(), size: CGSizeMake(260, 75))
     var timerDisplay:SKSpriteNode = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(260, 75))
     
-    
+    var selfHeight:Float = Float()
+    var selfWidth:Float = Float()
     
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
 //        UIApplication.statusBarIsHidden = true;
+        
+        selfHeight = self.view.bounds.size.height
+        selfWidth = self.view.bounds.size.width;
+//        CGFloat boxHeight=box.bounds.size.height;
+//        CGFloat boxWidth=box.bounds.size.width;
+        
+        
         
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         let screenCenter = CGPoint(x: 0, y: 0)
