@@ -126,7 +126,17 @@ class GameScene: SKScene {
         
         scoreLabel.text = "0";
         scoreLabel.fontSize = 55;
+        
+        println(selfHeight) // if 568, the device is an iPhone 5, otherwise, it is an iPhone 4S
+        
         scoreLabel.position = CGPoint(x:-130, y:330)
+        
+        // iPhone 5 positioning
+        if (selfHeight == 568.0) {
+            scoreLabel.position = CGPoint(x:-110, y:330)
+        }
+        
+        
         scoreLabel.fontColor = UIColor.blackColor()
 //        scoreLabel.name = NSString(format:"%i", scoreLabel)
         
@@ -139,6 +149,12 @@ class GameScene: SKScene {
         sectTappedLabel.text = "None";
         sectTappedLabel.fontSize = 35;
         sectTappedLabel.position = CGPoint(x:130, y:340)
+        
+        if (selfHeight == 568.0) {
+            sectTappedLabel.position = CGPoint(x:110, y:340)
+        }
+        
+        
 //        if (self.frame)
         sectTappedLabel.fontColor = UIColor.whiteColor()
         sectTappedLabel.name = NSString(format:"%i", sectTappedLabel)
@@ -151,6 +167,12 @@ class GameScene: SKScene {
         
         player.xScale = 1.2
         player.yScale = 1.2
+        
+        if (selfHeight == 568.0) {
+            player.xScale = 1.0
+            player.yScale = 1.0
+        }
+        
         player.position = screenCenter
         player.name = "player"
 //        player. = playerTag
