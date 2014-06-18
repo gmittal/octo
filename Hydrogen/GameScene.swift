@@ -545,6 +545,46 @@ class GameScene: SKScene {
             timeLeft = 0
             timer.invalidate()
             timeStarted = false
+            
+            if (startTime == 15) {
+                
+                if (NSUserDefaults.standardUserDefaults().integerForKey("fifteenHighScore") == 0) {
+                    NSUserDefaults.standardUserDefaults().setInteger(numCorrects, forKey: "fifteenHighScore")
+                }
+                
+                if (numCorrects > NSUserDefaults.standardUserDefaults().integerForKey("fifteenHighScore")) {
+                    NSUserDefaults.standardUserDefaults().setInteger(numCorrects, forKey: "fifteenHighScore")
+                }
+            }
+            
+            
+            
+            if (startTime == 30) {
+                
+                if (NSUserDefaults.standardUserDefaults().integerForKey("thirtyHighScore") == 0) {
+                    NSUserDefaults.standardUserDefaults().setInteger(numCorrects, forKey: "thirtyHighScore")
+                }
+                
+                if (numCorrects > NSUserDefaults.standardUserDefaults().integerForKey("thirtyHighScore")) {
+                    NSUserDefaults.standardUserDefaults().setInteger(numCorrects, forKey: "thirtyHighScore")
+                }
+            }
+            
+            
+            
+            if (startTime == 45) {
+                
+                if (NSUserDefaults.standardUserDefaults().integerForKey("fortyFiveHighScore") == 0) {
+                    NSUserDefaults.standardUserDefaults().setInteger(numCorrects, forKey: "fortyFiveHighScore")
+                }
+                
+                if (numCorrects > NSUserDefaults.standardUserDefaults().integerForKey("fortyFiveHighScore")) {
+                    NSUserDefaults.standardUserDefaults().setInteger(numCorrects, forKey: "fortyFiveHighScore")
+                }
+            }
+            
+            
+            
             gameOverTransition()
         }
         
@@ -1060,25 +1100,49 @@ class GameFailScene: SKScene {
         highScore.position = CGPoint(x:0, y: -70)
         highScore.fontSize = 50
         
+        println(gameMode)
         
-        if (numColors == 25) {
-            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("twentyFiveHighScore")
-            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+        if (gameMode == "Classic") {
+            if (numColors == 25) {
+                var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("twentyFiveHighScore")
+                highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+                
+            }
             
-        }
-        
-        if (numColors == 50) {
-            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("fiftyHighScore")
-            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+            if (numColors == 50) {
+                var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("fiftyHighScore")
+                highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+                
+            }
             
-        }
-        
-        
-        if (numColors == 100) {
-            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("hundredHighScore")
-            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
             
+            if (numColors == 100) {
+                var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("hundredHighScore")
+                highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+                
+            }
+            
+        } else if (gameMode == "Zen") {
+            if (startTime == 15) {
+                var highScoreInt = NSUserDefaults.standardUserDefaults().integerForKey("fifteenHighScore")
+                highScore.text = NSString(format:"BEST %i", highScoreInt)
+                
+            }
+            
+            if (startTime == 30) {
+                var highScoreInt = NSUserDefaults.standardUserDefaults().integerForKey("thirtyHighScore")
+                highScore.text = NSString(format:"BEST %i", highScoreInt)
+                
+            }
+            
+            
+            if (startTime == 45) {
+                var highScoreInt = NSUserDefaults.standardUserDefaults().integerForKey("fortyFiveHighScore")
+                highScore.text = NSString(format:"BEST %i", highScoreInt)
+                
+            }
         }
+
         
         
         self.addChild(highScore)
@@ -1188,26 +1252,46 @@ class GameOverScene: SKScene {
         highScore.position = CGPoint(x:0, y: -70)
         highScore.fontSize = 50
         
-        
-        if (numColors == 25) {
-            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("twentyFiveHighScore")
-            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+        if (gameMode == "Classic") {
+            if (numColors == 25) {
+                var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("twentyFiveHighScore")
+                highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+                
+            }
             
-        }
-        
-        if (numColors == 50) {
-            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("fiftyHighScore")
-            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+            if (numColors == 50) {
+                var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("fiftyHighScore")
+                highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+                
+            }
             
-        }
-        
-        
-        if (numColors == 100) {
-            var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("hundredHighScore")
-            highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
             
+            if (numColors == 100) {
+                var highScoreFloat = NSUserDefaults.standardUserDefaults().floatForKey("hundredHighScore")
+                highScore.text = NSString(format:"BEST %.2f", highScoreFloat)
+                
+            }
+            
+        } else if (gameMode == "Zen") {
+            if (startTime == 15) {
+                var highScoreInt = NSUserDefaults.standardUserDefaults().integerForKey("fifteenHighScore")
+                highScore.text = NSString(format:"BEST %i", highScoreInt)
+                
+            }
+            
+            if (startTime == 30) {
+                var highScoreInt = NSUserDefaults.standardUserDefaults().integerForKey("thirtyHighScore")
+                highScore.text = NSString(format:"BEST %i", highScoreInt)
+                
+            }
+            
+            
+            if (startTime == 45) {
+                var highScoreInt = NSUserDefaults.standardUserDefaults().integerForKey("fortyFiveHighScore")
+                highScore.text = NSString(format:"BEST %i", highScoreInt)
+                
+            }
         }
-        
         
         self.addChild(highScore)
         
