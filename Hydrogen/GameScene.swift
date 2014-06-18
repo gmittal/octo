@@ -94,8 +94,8 @@ class GameScene: SKScene {
     var colorDisplay:SKSpriteNode = SKSpriteNode(color: UIColor.blackColor(), size: CGSizeMake(260, 75))
     var timerDisplay:SKSpriteNode = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(260, 75))
     
-    var selfHeight:Float = Float()
-    var selfWidth:Float = Float()
+    var selfHeight:CGFloat = CGFloat()
+    var selfWidth:CGFloat = CGFloat()
     
     
     override func didMoveToView(view: SKView) {
