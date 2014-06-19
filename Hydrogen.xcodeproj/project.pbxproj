@@ -42,7 +42,6 @@
 		A6F5BBC419527DEA0031D02F /* StartMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartMenuScene.swift; sourceTree = "<group>"; };
 		A6F5BBC819528B260031D02F /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalVariables.swift; path = ../GlobalVariables.swift; sourceTree = "<group>"; };
 		A6F5BBD2195293F80031D02F /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		A6F5BBD419529AEE0031D02F /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		C719280619416B460025857F /* Hydrogen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hydrogen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C719280A19416B460025857F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C719280B19416B460025857F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -113,7 +112,6 @@
 				C719281319416B460025857F /* Main.storyboard */,
 				C7338010194CC28100AE633C /* GameOverScene.sks */,
 				C719281619416B460025857F /* Images.xcassets */,
-				A6F5BBD419529AEE0031D02F /* MyPlayground.playground */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

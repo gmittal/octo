@@ -311,9 +311,7 @@ class GameScene: SKScene {
             println("Green tapped")
             color = "Green"
         }
-        
         return color
-        
     }
 
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -327,7 +325,6 @@ class GameScene: SKScene {
             if (tappedNode.name) {
                 
                 if (tappedNode.name == "player") {
-                    
                     
                     let pos1:CGPoint = location
                     let pos2:CGPoint = player.position
@@ -408,10 +405,7 @@ class GameScene: SKScene {
             } else {
                 println("NULL")
             }
-            
-            
         }
-        
     }
     
     func updateTimerLabel()
