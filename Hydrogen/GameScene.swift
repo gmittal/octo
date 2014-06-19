@@ -342,11 +342,26 @@ class GameScene: SKScene {
             time = 0.0
             numCorrects = 0
 //            println(colorList)
+            
             if (gameMode == "Stress") {
+                
+                if (NSUserDefaults.standardUserDefaults().integerForKey("stressHighScore") == 0) {
+                    NSUserDefaults.standardUserDefaults().setInteger(numTappedCorrect, forKey: "stressHighScore")
+                }
+                
+                if (numTappedCorrect > NSUserDefaults.standardUserDefaults().integerForKey("stressHighScore")) {
+                    NSUserDefaults.standardUserDefaults().setInteger(numTappedCorrect, forKey: "stressHighScore")
+                }
+                
                 gameOverTransition()
+                
+                
             } else {
                 presentFailureScene()
+                numTappedCorrect = 0
             }
+            
+            
             
         }
         
@@ -775,10 +790,22 @@ class GameScene: SKScene {
         stressTimeLeft++;
         println(stressTimeLeft)
         
-        if (stressTimeLeft == timeThreshold + 1) {
+        if (stressTimeLeft == timeThreshold) {
             stressTimeLeft = 0
             timer.invalidate()
             timeStarted = false
+            
+            
+            if (NSUserDefaults.standardUserDefaults().integerForKey("stressHighScore") == 0) {
+                NSUserDefaults.standardUserDefaults().setInteger(numTappedCorrect, forKey: "stressHighScore")
+            }
+            
+            if (numTappedCorrect > NSUserDefaults.standardUserDefaults().integerForKey("stressHighScore")) {
+                NSUserDefaults.standardUserDefaults().setInteger(numTappedCorrect, forKey: "stressHighScore")
+            }
+            
+            
+            
             gameOverTransition()
         }
     }
@@ -1350,6 +1377,9 @@ class GameFailScene: SKScene {
                 highScore.text = NSString(format:"BEST %i", highScoreInt)
                 
             }
+        } else if (gameMode == "Stress") {
+            var highScoreInt = NSUserDefaults.standardUserDefaults().integerForKey("stressHighScore")
+            highScore.text = NSString(format:"BEST %i", highScoreInt)
         }
 
         
@@ -1505,6 +1535,9 @@ class GameOverScene: SKScene {
                 highScore.text = NSString(format:"BEST %i", highScoreInt)
                 
             }
+        } else if (gameMode == "Stress") {
+            var highScoreInt = NSUserDefaults.standardUserDefaults().integerForKey("stressHighScore")
+            highScore.text = NSString(format:"BEST %i", highScoreInt)
         }
         
         self.addChild(highScore)
