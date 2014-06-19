@@ -342,7 +342,11 @@ class GameScene: SKScene {
             time = 0.0
             numCorrects = 0
 //            println(colorList)
-            presentFailureScene()
+            if (gameMode == "Stress") {
+                gameOverTransition()
+            } else {
+                presentFailureScene()
+            }
             
         }
         
@@ -1444,8 +1448,12 @@ class GameOverScene: SKScene {
         if (gameMode == "Classic") {
             score.text = NSString(format:"%.2f", time)
         } else if (gameMode == "Zen") {
-            score.text = NSString(format:"%.i", numCorrects)
+            score.text = NSString(format:"%i", numCorrects)
+        } else if (gameMode == "Stress") {
+            score.text = NSString(format:"%i", numTappedCorrect)
         }
+        
+        
         score.fontSize = 150
         self.addChild(score)
         
