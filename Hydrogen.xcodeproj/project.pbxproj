@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6F5BBBD19527CAA0031D02F /* GameFailScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F5BBBC19527CAA0031D02F /* GameFailScene.swift */; };
+		A6F5BBBF19527D200031D02F /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F5BBBE19527D200031D02F /* GameOverScene.swift */; };
+		A6F5BBC119527D880031D02F /* ZenMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F5BBC019527D880031D02F /* ZenMenuScene.swift */; };
+		A6F5BBC319527DBB0031D02F /* ClassicMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F5BBC219527DBB0031D02F /* ClassicMenuScene.swift */; };
+		A6F5BBC519527DEA0031D02F /* StartMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F5BBC419527DEA0031D02F /* StartMenuScene.swift */; };
+		A6F5BBC919528B260031D02F /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F5BBC819528B260031D02F /* GlobalVariables.swift */; };
+		A6F5BBD3195293F80031D02F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F5BBD2195293F80031D02F /* Colors.swift */; };
 		C719280C19416B460025857F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C719280B19416B460025857F /* AppDelegate.swift */; };
 		C719280E19416B460025857F /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C719280D19416B460025857F /* GameScene.sks */; };
 		C719281019416B460025857F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C719280F19416B460025857F /* GameScene.swift */; };
@@ -28,6 +35,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A6F5BBBC19527CAA0031D02F /* GameFailScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameFailScene.swift; sourceTree = "<group>"; };
+		A6F5BBBE19527D200031D02F /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		A6F5BBC019527D880031D02F /* ZenMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZenMenuScene.swift; sourceTree = "<group>"; };
+		A6F5BBC219527DBB0031D02F /* ClassicMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicMenuScene.swift; sourceTree = "<group>"; };
+		A6F5BBC419527DEA0031D02F /* StartMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartMenuScene.swift; sourceTree = "<group>"; };
+		A6F5BBC819528B260031D02F /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalVariables.swift; path = ../GlobalVariables.swift; sourceTree = "<group>"; };
+		A6F5BBD2195293F80031D02F /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		C719280619416B460025857F /* Hydrogen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hydrogen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C719280A19416B460025857F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C719280B19416B460025857F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +74,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A6F5BBCB19528C540031D02F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A6F5BBC819528B260031D02F /* GlobalVariables.swift */,
+				A6F5BBD2195293F80031D02F /* Colors.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A6F5BBCD19528C690031D02F /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				C719280F19416B460025857F /* GameScene.swift */,
+				A6F5BBC419527DEA0031D02F /* StartMenuScene.swift */,
+				A6F5BBC219527DBB0031D02F /* ClassicMenuScene.swift */,
+				A6F5BBC019527D880031D02F /* ZenMenuScene.swift */,
+				A6F5BBBE19527D200031D02F /* GameOverScene.swift */,
+				A6F5BBBC19527CAA0031D02F /* GameFailScene.swift */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		A6F5BBCE19528C740031D02F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C719281119416B460025857F /* GameViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		A6F5BBCF19528D390031D02F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C719280B19416B460025857F /* AppDelegate.swift */,
+				C719280D19416B460025857F /* GameScene.sks */,
+				C719281319416B460025857F /* Main.storyboard */,
+				C7338010194CC28100AE633C /* GameOverScene.sks */,
+				C719281619416B460025857F /* Images.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		C71927FD19416B450025857F = {
 			isa = PBXGroup;
 			children = (
@@ -81,13 +137,10 @@
 		C719280819416B460025857F /* Hydrogen */ = {
 			isa = PBXGroup;
 			children = (
-				C719280B19416B460025857F /* AppDelegate.swift */,
-				C719280D19416B460025857F /* GameScene.sks */,
-				C719280F19416B460025857F /* GameScene.swift */,
-				C719281119416B460025857F /* GameViewController.swift */,
-				C719281319416B460025857F /* Main.storyboard */,
-				C7338010194CC28100AE633C /* GameOverScene.sks */,
-				C719281619416B460025857F /* Images.xcassets */,
+				A6F5BBCB19528C540031D02F /* Model */,
+				A6F5BBCD19528C690031D02F /* Scenes */,
+				A6F5BBCE19528C740031D02F /* Controller */,
+				A6F5BBCF19528D390031D02F /* Resources */,
 				C719280919416B460025857F /* Supporting Files */,
 			);
 			path = Hydrogen;
@@ -220,8 +273,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6F5BBC519527DEA0031D02F /* StartMenuScene.swift in Sources */,
+				A6F5BBD3195293F80031D02F /* Colors.swift in Sources */,
+				A6F5BBBF19527D200031D02F /* GameOverScene.swift in Sources */,
 				C719281019416B460025857F /* GameScene.swift in Sources */,
+				A6F5BBC919528B260031D02F /* GlobalVariables.swift in Sources */,
 				C719281219416B460025857F /* GameViewController.swift in Sources */,
+				A6F5BBC319527DBB0031D02F /* ClassicMenuScene.swift in Sources */,
+				A6F5BBC119527D880031D02F /* ZenMenuScene.swift in Sources */,
+				A6F5BBBD19527CAA0031D02F /* GameFailScene.swift in Sources */,
 				C719280C19416B460025857F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
