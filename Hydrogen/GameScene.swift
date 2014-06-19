@@ -64,6 +64,11 @@ var startTime = 0;
 var timeLeft = 0;
 
 
+// stress mode
+var timeThreshold:Int = 2
+var numTappedCorrect:Int = 0;
+var stressTimeLeft:Int = 0;
+
 
 var scoreLabelAdded:Bool = false;
 var sectLabelAdded:Bool = false;
@@ -267,13 +272,20 @@ class GameScene: SKScene {
             
             if (colorList.count > 0) {
                 
-                println(colorList)
+                println(colorList);
                 updateSectLabelFirstTime(String(colorList[0] as String))
                 
                 if (gameMode == "Zen") {
                     numCorrects++;
                     updateTimerLabel()
                 }
+                
+                
+                if (gameMode == "Stress") {
+                    numTappedCorrect++;
+                    updateTimerLabel()
+                }
+                
                 
             } else {
                 timeStarted = false
@@ -361,37 +373,150 @@ class GameScene: SKScene {
     
     
     func updateSectLabelFirstTime(color:String) {
-        if color == "Turquoise" {
-            colorDisplay.color = turquoise
-        }
-        
-        if color == "Blue" {
-            colorDisplay.color = blue
-        }
-        
-        if color == "Black" {
-            colorDisplay.color = black
-        }
-        
-        if color == "Purple" {
-            colorDisplay.color = purple
-        }
-        
-        if color == "Red" {
-            colorDisplay.color = red
-        }
-        
-        if color == "Orange" {
-            colorDisplay.color = orange
-        }
-        
-        if color == "Yellow" {
-            colorDisplay.color = yellow
-        }
-        
-        if color == "Green" {
+        if (gameMode == "Stress") {
+            var randomDisplayColor:UInt32 = arc4random()%(8-1+1)+1
+            var randomTextColor:UInt32 = arc4random()%(8-1+1)+1
             
-            colorDisplay.color = green
+            var displayColor:CDouble = CDouble(randomDisplayColor)
+            var textColor:CDouble = CDouble(randomTextColor)
+            
+            while (displayColor == textColor) {
+                randomDisplayColor = arc4random()%(8-1+1)+1
+                randomTextColor = arc4random()%(8-1+1)+1
+                
+                displayColor = CDouble(randomDisplayColor)
+                textColor = CDouble(randomTextColor)
+            }
+            
+            
+            println(displayColor)
+            println(textColor)
+            
+            
+            if (displayColor == 1) {
+                colorDisplay.color = turquoise
+//                colorList.append("Turquoise")
+            }
+            
+            if (displayColor == 2) {
+                colorDisplay.color = blue
+//                colorList.append("Blue")
+            }
+            
+            if (displayColor == 3) {
+                colorDisplay.color = black
+                
+//                colorList.append("Black")
+            }
+            
+            if (displayColor == 4) {
+                colorDisplay.color = purple
+//                colorList.append("Purple")
+            }
+            
+            if (displayColor == 5) {
+                colorDisplay.color = red
+//                colorList.append("Red")
+            }
+            
+            if (displayColor == 6) {
+                colorDisplay.color = orange
+//                colorList.append("Orange")
+            }
+            
+            if (displayColor == 7) {
+                colorDisplay.color = yellow
+//                colorList.append("Yellow")
+            }
+            
+            if (displayColor == 8) {
+                colorDisplay.color = green
+//                colorList.append("Green")
+            }
+            
+            
+            
+            
+            // for the text now
+            if (textColor == 1) {
+                sectTappedLabel.fontColor = turquoise
+                //                colorList.append("Turquoise")
+            }
+            
+            if (textColor == 2) {
+                sectTappedLabel.fontColor = blue
+                //                colorList.append("Blue")
+            }
+            
+            if (textColor == 3) {
+                sectTappedLabel.fontColor = black
+                
+                //                colorList.append("Black")
+            }
+            
+            if (textColor == 4) {
+                sectTappedLabel.fontColor = purple
+                //                colorList.append("Purple")
+            }
+            
+            if (textColor == 5) {
+                sectTappedLabel.fontColor = red
+                //                colorList.append("Red")
+            }
+            
+            if (textColor == 6) {
+                sectTappedLabel.fontColor = orange
+                //                colorList.append("Orange")
+            }
+            
+            if (textColor == 7) {
+                sectTappedLabel.fontColor = yellow
+                //                colorList.append("Yellow")
+            }
+            
+            if (textColor == 8) {
+                sectTappedLabel.fontColor = green
+                //                colorList.append("Green")
+            }
+
+            
+            
+            
+            
+        
+        } else {
+            if color == "Turquoise" {
+                colorDisplay.color = turquoise
+            }
+            
+            if color == "Blue" {
+                colorDisplay.color = blue
+            }
+            
+            if color == "Black" {
+                colorDisplay.color = black
+            }
+            
+            if color == "Purple" {
+                colorDisplay.color = purple
+            }
+            
+            if color == "Red" {
+                colorDisplay.color = red
+            }
+            
+            if color == "Orange" {
+                colorDisplay.color = orange
+            }
+            
+            if color == "Yellow" {
+                colorDisplay.color = yellow
+            }
+            
+            if color == "Green" {
+                
+                colorDisplay.color = green
+            }
         }
         
         
@@ -531,6 +656,15 @@ class GameScene: SKScene {
                     }
                     
                     
+                    if (gameMode == "Stress") {
+                        if (timeStarted == false) {
+                            timeStarted = true;
+                            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "checkTimerForStress", userInfo: nil, repeats: true)
+                        }
+                    }
+                    
+                    
+                    
                     
                     if (colorList.count > 0) {
                         updateColorDisplay(colorTapped)
@@ -570,6 +704,11 @@ class GameScene: SKScene {
         
         if (gameMode == "Zen") {
             scoreLabel.text = NSString(format:"%i", numCorrects)
+        }
+        
+        if (gameMode == "Stress") {
+            stressTimeLeft = 0;
+            scoreLabel.text = NSString(format:"%i", numTappedCorrect)
         }
         
     }
@@ -627,6 +766,23 @@ class GameScene: SKScene {
         
     }
     
+
+    func checkTimerForStress() {
+        stressTimeLeft++;
+        println(stressTimeLeft)
+        
+        if (stressTimeLeft == timeThreshold + 1) {
+            stressTimeLeft = 0
+            timer.invalidate()
+            timeStarted = false
+            gameOverTransition()
+        }
+    }
+    
+    
+    
+    
+    
     
     func gameOverTransition() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
@@ -657,7 +813,6 @@ class GameScene: SKScene {
     }
     
 }
-
 
 
 class ZenMenuScene:SKScene {
@@ -1047,6 +1202,16 @@ class StartMenuScene:SKScene {
         
     }
     
+    func presentStressScene() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        
+        let scene = GameScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+        
+    }
+    
     
     func zenGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
@@ -1084,8 +1249,11 @@ class StartMenuScene:SKScene {
                 
                 
                 if (tappedNode.name == "stress") {
-//                    numColors = 100
-//                    presentGameScene()
+                    numColors = 1000 // might need to change this later!
+//                    startTime = 15;
+                    gameMode = "Stress"
+                    presentStressScene()
+                    println("Stress Mode")
                     
                 }
             }
@@ -1284,6 +1452,7 @@ class GameOverScene: SKScene {
         // need to wipe this before proceeding
         time = 0.0
         numCorrects = 0
+        numTappedCorrect = 0
         
         var highScore = SKLabelNode(fontNamed:"HelveticaNeue-Bold")
         highScore.position = CGPoint(x:0, y: -70)
