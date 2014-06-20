@@ -897,6 +897,15 @@ class ZenMenuScene:SKScene {
         self.addChild(hundred)
         
         
+        let helper = SKLabelNode(fontNamed: "Avenir Next")
+        helper.text = "Choose a difficulty"
+        helper.position = CGPoint(x:0, y: 60)
+        helper.fontColor = UIColor.blackColor()
+        helper.fontSize = 17
+        
+        self.addChild(helper)
+        
+        
         twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
         fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
         hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
@@ -1052,6 +1061,14 @@ class ClassicMenuScene:SKScene {
         hundred.name = "hundred"
         self.addChild(hundred)
         
+        let helper = SKLabelNode(fontNamed: "Avenir Next")
+        helper.text = "Choose a difficulty"
+        helper.position = CGPoint(x:0, y: 60)
+        helper.fontColor = UIColor.blackColor()
+        helper.fontSize = 17
+        
+        self.addChild(helper)
+        
         
         twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
         fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
@@ -1200,11 +1217,21 @@ class StartMenuScene:SKScene {
         self.addChild(hundred)
         
 
+        let helper = SKLabelNode(fontNamed: "Avenir Next")
+        helper.text = "Choose a game mode"
+        helper.position = CGPoint(x:0, y: 60)
+        helper.fontColor = UIColor.blackColor()
+        helper.fontSize = 17
+        
+        self.addChild(helper)
+        
+//        helper.hidden = true;
         
         
         twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
         fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
         hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+        helper.runAction(SKAction.fadeInWithDuration(0.8))
         
         titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
         
