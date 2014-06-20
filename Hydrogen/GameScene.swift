@@ -1069,10 +1069,26 @@ class ClassicMenuScene:SKScene {
         
         self.addChild(helper)
         
+        // You'll need to create the image named backButton but it's a good idea to have so that a player isn't locked
+        // into a scene once they press  "Classic," "Zen" or "Stress"
+        let back = SKSpriteNode(imageNamed:"backButton")
+        back.position = CGPoint(x:0, y:-1210)
+        back.xScale = 1.5
+        back.yScale = 1.5
+        back.name = "back"
+        self.addChild(back) 
         
-        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
-        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
-        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+//        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
+//        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
+//        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+        
+        // A small change but adds a light bounce and delay to each node as they enter the view behind the one ahead.
+        twentyFive.runAction(SKAction.sequence([SKAction.moveToY(10, duration: 0.70), SKAction.moveToY(0, duration: 0.2)]))
+        fifty.runAction(SKAction.sequence([SKAction.moveToY(-60, duration: 0.75), SKAction.moveToY(-70, duration: 0.2)]))
+        hundred.runAction(SKAction.sequence([SKAction.moveToY(-130, duration: 0.80), SKAction.moveToY(-140, duration: 0.2)]))
+        back.runAction(SKAction.sequence([SKAction.moveToY(-200, duration: 0.85), SKAction.moveToY(-210, duration: 0.2)]))
+        
+        
         
         titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
         
@@ -1099,6 +1115,13 @@ class ClassicMenuScene:SKScene {
         
         self.scene.view.presentScene(scene, transition: transition)
         
+    }
+    
+    fucn presentStartMenuScene() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        let scene = StartMenuScene(size: self.scene.size)
+        scene.scaleMode = .AspectFill
+        self.scene.view.presentScene(scene, transition: transition)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -1133,6 +1156,11 @@ class ClassicMenuScene:SKScene {
                     gameMode = "Classic"
                     presentGameScene()
                     
+                }
+                
+                // handle back button
+                if (tappedNode.name == "back") {
+                    presentStartMenuScene()
                 }
             }
             
