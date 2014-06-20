@@ -1028,6 +1028,13 @@ class ZenMenuScene:SKScene {
         hundred.name = "fortyFive"
         self.addChild(hundred)
         
+        let back = SKSpriteNode(imageNamed:"back")
+        back.position = CGPoint(x:0, y:-1280)
+        back.xScale = 1.5
+        back.yScale = 1.5
+        back.name = "backButton"
+        self.addChild(back)
+        
         
         let helper = SKLabelNode(fontNamed: "Avenir Next")
         helper.text = "Choose a difficulty"
@@ -1041,6 +1048,7 @@ class ZenMenuScene:SKScene {
         twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
         fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
         hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+        back.runAction(SKAction.moveToY(-280, duration: 0.8))
         
         titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
         
@@ -1058,6 +1066,15 @@ class ZenMenuScene:SKScene {
         
     }
     
+    func exitToMenu() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        
+        let scene = StartMenuScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+        
+    }
     
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
@@ -1107,6 +1124,14 @@ class ZenMenuScene:SKScene {
                     presentGameScene()
                     println("Forty Five")
                 }
+                
+                if (tappedNode.name == "backButton") {
+                    //                    numColors = 100
+                    //                    gameMode = "Classic"
+                    exitToMenu()
+                    
+                }
+                
             }
             
             
@@ -1193,6 +1218,16 @@ class ClassicMenuScene:SKScene {
         hundred.name = "hundred"
         self.addChild(hundred)
         
+        
+        let back = SKSpriteNode(imageNamed:"back")
+        back.position = CGPoint(x:0, y:-1280)
+        back.xScale = 1.5
+        back.yScale = 1.5
+        back.name = "backButton"
+        self.addChild(back)
+        
+        
+        
         let helper = SKLabelNode(fontNamed: "Avenir Next")
         helper.text = "Choose a difficulty"
         helper.position = CGPoint(x:0, y: 60)
@@ -1205,6 +1240,7 @@ class ClassicMenuScene:SKScene {
         twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
         fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
         hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+        back.runAction(SKAction.moveToY(-280, duration: 0.8))
         
         titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
         
@@ -1227,6 +1263,16 @@ class ClassicMenuScene:SKScene {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
         let scene = GameScene(size: self.scene.size)
+        scene.scaleMode = SKSceneScaleMode.AspectFill
+        
+        self.scene.view.presentScene(scene, transition: transition)
+        
+    }
+    
+    func exitToMenu() {
+        let transition = SKTransition.crossFadeWithDuration(0.6)
+        
+        let scene = StartMenuScene(size: self.scene.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene.view.presentScene(scene, transition: transition)
@@ -1264,6 +1310,13 @@ class ClassicMenuScene:SKScene {
                     numColors = 100
                     gameMode = "Classic"
                     presentGameScene()
+                    
+                }
+                
+                if (tappedNode.name == "backButton") {
+//                    numColors = 100
+//                    gameMode = "Classic"
+                    exitToMenu()
                     
                 }
             }
