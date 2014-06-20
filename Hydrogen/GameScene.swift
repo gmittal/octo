@@ -1045,10 +1045,15 @@ class ZenMenuScene:SKScene {
         self.addChild(helper)
         
         
-        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
-        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
-        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
-        back.runAction(SKAction.moveToY(-280, duration: 0.8))
+//        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
+//        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
+//        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+//        back.runAction(SKAction.moveToY(-280, duration: 0.8))
+        
+        twentyFive.runAction(SKAction.sequence([SKAction.moveToY(10, duration: 0.70), SKAction.moveToY(0, duration: 0.2)]))
+        fifty.runAction(SKAction.sequence([SKAction.moveToY(-60, duration: 0.75), SKAction.moveToY(-70, duration: 0.2)]))
+        hundred.runAction(SKAction.sequence([SKAction.moveToY(-130, duration: 0.80), SKAction.moveToY(-140, duration: 0.2)]))
+        back.runAction(SKAction.sequence([SKAction.moveToY(-270, duration: 0.85), SKAction.moveToY(-280, duration: 0.2)]))
         
         titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
         
@@ -1237,10 +1242,18 @@ class ClassicMenuScene:SKScene {
         self.addChild(helper)
         
         
-        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
-        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
-        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
-        back.runAction(SKAction.moveToY(-280, duration: 0.8))
+//        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
+//        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
+//        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+//        back.runAction(SKAction.moveToY(-280, duration: 0.8))
+        
+        
+        twentyFive.runAction(SKAction.sequence([SKAction.moveToY(10, duration: 0.70), SKAction.moveToY(0, duration: 0.2)]))
+        fifty.runAction(SKAction.sequence([SKAction.moveToY(-60, duration: 0.75), SKAction.moveToY(-70, duration: 0.2)]))
+        hundred.runAction(SKAction.sequence([SKAction.moveToY(-130, duration: 0.80), SKAction.moveToY(-140, duration: 0.2)]))
+        back.runAction(SKAction.sequence([SKAction.moveToY(-270, duration: 0.85), SKAction.moveToY(-280, duration: 0.2)]))
+        
+        
         
         titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
         
@@ -1412,11 +1425,16 @@ class StartMenuScene:SKScene {
         
 //        helper.hidden = true;
         
-        
-        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
-        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
-        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
+//        
+//        twentyFive.runAction(SKAction.moveToY(0, duration: 0.8))
+//        fifty.runAction(SKAction.moveToY(-70, duration: 0.8))
+//        hundred.runAction(SKAction.moveToY(-140, duration: 0.8))
         helper.runAction(SKAction.fadeInWithDuration(0.8))
+        
+        twentyFive.runAction(SKAction.sequence([SKAction.moveToY(10, duration: 0.70), SKAction.moveToY(0, duration: 0.2)]))
+        fifty.runAction(SKAction.sequence([SKAction.moveToY(-60, duration: 0.75), SKAction.moveToY(-70, duration: 0.2)]))
+        hundred.runAction(SKAction.sequence([SKAction.moveToY(-130, duration: 0.80), SKAction.moveToY(-140, duration: 0.2)]))
+//        back.runAction(SKAction.sequence([SKAction.moveToY(-200, duration: 0.85), SKAction.moveToY(-280, duration: 0.2)]))
         
         titleSprite.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 0.8)))
         
