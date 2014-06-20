@@ -83,6 +83,12 @@ var colorDisplay0Tag:Int = 0;
 var playerTag:Int = 0;
 
 
+// tutorials
+var classicTutorialDone:Bool = NSUserDefaults.standardUserDefaults().boolForKey("classicTutorial")
+var zenTutorialDone:Bool = NSUserDefaults.standardUserDefaults().boolForKey("zenTutorial")
+var stressTutorialDone:Bool = NSUserDefaults.standardUserDefaults().boolForKey("stressTutorial")
+
+
 // game scene class
 class GameScene: SKScene {
     
@@ -101,6 +107,10 @@ class GameScene: SKScene {
     
     var selfHeight:CGFloat = CGFloat()
     var selfWidth:CGFloat = CGFloat()
+    
+    let backdrop1 = SKSpriteNode(imageNamed:"tutorialBackdrop")
+    let backdrop2 = SKSpriteNode(imageNamed:"tutorialBackdrop")
+    let backdrop3 = SKSpriteNode(imageNamed:"tutorialBackdrop")
     
     
     override func didMoveToView(view: SKView) {
@@ -190,8 +200,124 @@ class GameScene: SKScene {
         initColorArray()
         initColorDisplay()
         
+        initTutorial()
+        
         
     }
+    
+    
+    func alertView(View: UIAlertView!, clickedButtonAtIndex buttonIndex: Int){
+        
+        switch buttonIndex{
+            
+        case 0:
+            NSLog("Dismiss");
+            if (gameMode == "Classic") {
+                dismissBackdrop1()
+            } else if (gameMode == "Zen") {
+                dismissBackdrop2()
+            } else if (gameMode == "Stress") {
+                dismissBackdrop3()
+            }
+            break;
+        default:
+            NSLog("Default");
+            break;
+            //Some code here..
+            
+        }
+    }
+    
+    
+    func dismissBackdrop1() {
+        backdrop1.runAction(SKAction.moveToY(1000, duration: 1.0))
+    }
+    
+    func dismissBackdrop2() {
+        backdrop2.runAction(SKAction.moveToY(1000, duration: 1.0))
+    }
+    
+    func dismissBackdrop3() {
+        backdrop3.runAction(SKAction.moveToY(1000, duration: 1.0))
+    }
+    
+    
+    func initTutorial() {
+        if (gameMode == "Classic") {
+            if (classicTutorialDone == false) {
+                classicTutorialDone = true
+                
+                backdrop1.position = CGPoint(x:0, y:0)
+                backdrop1.xScale = 1.6
+                backdrop1.yScale = 1.6
+                backdrop1.zPosition = 10000
+                backdrop1.name = "backdrop1"
+                self.addChild(backdrop1)
+                
+                var alertView = UIAlertView();
+                alertView.addButtonWithTitle("OK");
+                alertView.delegate = self
+                alertView.title = "Classic Mode";
+                alertView.message = "Tap the color shown in the top right corner on the octagon as fast as possible.";
+                alertView.show();
+            
+
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "classicTutorial")
+                
+                
+            }
+            
+        } else if (gameMode == "Zen") {
+            if (zenTutorialDone == false) {
+                zenTutorialDone = true
+                
+                backdrop2.position = CGPoint(x:0, y:0)
+                backdrop2.xScale = 1.6
+                backdrop2.yScale = 1.6
+                backdrop2.zPosition = 10000
+                backdrop2.name = "backdrop2"
+                self.addChild(backdrop2)
+                
+                var alertView = UIAlertView();
+                alertView.addButtonWithTitle("OK");
+                alertView.delegate = self
+                alertView.title = "Zen Mode";
+                alertView.message = "Try and tap as many of the colors shown in the top right corner within the allotted time.";
+                alertView.show();
+                
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "zenTutorial")
+                
+                
+            }
+            
+        } else if (gameMode == "Stress") {
+            if (stressTutorialDone == false) {
+                stressTutorialDone = true
+                
+                backdrop3.position = CGPoint(x:0, y:0)
+                backdrop3.xScale = 1.6
+                backdrop3.yScale = 1.6
+                backdrop3.zPosition = 10000
+                backdrop3.name = "backdrop3"
+                self.addChild(backdrop3)
+                
+                var alertView = UIAlertView();
+                alertView.addButtonWithTitle("OK");
+                alertView.delegate = self
+                alertView.title = "Stress Mode";
+                alertView.message = "See how long you can survive! \n Tap the color shown in the top right corner within one second.";
+                alertView.show();
+                
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "stressTutorial")
+                
+            }
+        }
+        
+        
+        
+        
+    }
+    
     
     
     // initialize color array
@@ -593,6 +719,7 @@ class GameScene: SKScene {
         
     }
     
+
     
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -697,6 +824,11 @@ class GameScene: SKScene {
                     }
                     
 //                    timeStarted = true;
+                    
+                    
+                    
+                } else if (tappedNode.name == "backdrop") {
+                    println("BACKDROP TAPPED")
                     
                     
                     
@@ -1218,7 +1350,7 @@ class StartMenuScene:SKScene {
         
 
         let helper = SKLabelNode(fontNamed: "Avenir Next")
-        helper.text = "Choose a game mode"
+        helper.text = "A game of swift reaction and octagons"
         helper.position = CGPoint(x:0, y: 60)
         helper.fontColor = UIColor.blackColor()
         helper.fontSize = 17
