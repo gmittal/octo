@@ -950,7 +950,7 @@ class GameScene: SKScene {
     func gameOverTransition() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
         
-        let scene = GameOverScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = GameOverScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -960,7 +960,7 @@ class GameScene: SKScene {
     func presentFailureScene() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
         
-        let scene = GameFailScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = GameFailScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1074,7 +1074,7 @@ class ZenMenuScene:SKScene {
     func exitToMenu() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = StartMenuScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = StartMenuScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1084,7 +1084,7 @@ class ZenMenuScene:SKScene {
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = GameScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1275,7 +1275,7 @@ class ClassicMenuScene:SKScene {
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size:  UIScreen.mainScreen().bounds.size)
+        let scene = GameScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1285,7 +1285,7 @@ class ClassicMenuScene:SKScene {
     func exitToMenu() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = StartMenuScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = StartMenuScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1456,7 +1456,7 @@ class StartMenuScene:SKScene {
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = ClassicMenuScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = ClassicMenuScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1466,7 +1466,7 @@ class StartMenuScene:SKScene {
     func presentStressScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = GameScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1477,7 +1477,7 @@ class StartMenuScene:SKScene {
     func zenGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = ZenMenuScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = ZenMenuScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1637,7 +1637,7 @@ class GameFailScene: SKScene {
     func presentStartMenu() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Right, duration: 0.5)
         
-        let scene = StartMenuScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = StartMenuScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1647,7 +1647,7 @@ class GameFailScene: SKScene {
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = GameScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1795,7 +1795,7 @@ class GameOverScene: SKScene {
     func presentStartMenu() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Right, duration: 0.5)
         
-        let scene = StartMenuScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = StartMenuScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
@@ -1805,7 +1805,7 @@ class GameOverScene: SKScene {
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size: UIScreen.mainScreen().bounds.size)
+        let scene = GameScene(size: self.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene?.view?.presentScene(scene, transition: transition)
