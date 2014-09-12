@@ -118,8 +118,8 @@ class GameScene: SKScene {
         
 //        UIApplication.statusBarIsHidden = true;
         
-        selfHeight = self.view?.bounds.size.height
-        selfWidth = self.view?.bounds.size.width;
+        selfHeight = UIScreen.mainScreen().bounds.height  //.bounds.size.height
+        selfWidth = UIScreen.mainScreen().bounds.width
 //        CGFloat boxHeight=box.bounds.size.height;
 //        CGFloat boxWidth=box.bounds.size.width;
         
@@ -950,20 +950,20 @@ class GameScene: SKScene {
     func gameOverTransition() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
         
-        let scene = GameOverScene(size: self.scene?.size!)
+        let scene = GameOverScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
     }
     
     
     func presentFailureScene() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
         
-        let scene = GameFailScene(size: self.scene?.size!)
+        let scene = GameFailScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
     }
     
     
@@ -1074,20 +1074,20 @@ class ZenMenuScene:SKScene {
     func exitToMenu() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = StartMenuScene(size: self.scene?.size!)
+        let scene = StartMenuScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
         
     }
     
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size: self.scene?.size)
+        let scene = GameScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
         
     }
     
@@ -1263,11 +1263,11 @@ class ClassicMenuScene:SKScene {
         //gesture recognizers
         var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-        self.view.addGestureRecognizer(swipeRight)
+        self.view?.addGestureRecognizer(swipeRight)
         
         var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-        self.view.addGestureRecognizer(swipeLeft)
+        self.view?.addGestureRecognizer(swipeLeft)
         
     }
     
@@ -1275,20 +1275,20 @@ class ClassicMenuScene:SKScene {
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size: self.scene.size)
+        let scene = GameScene(size:  UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
         
     }
     
     func exitToMenu() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = StartMenuScene(size: self.scene.size)
+        let scene = StartMenuScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
         
     }
     
@@ -1302,7 +1302,7 @@ class ClassicMenuScene:SKScene {
             let location = touch.locationInNode(self)
             let tappedNode = nodeAtPoint(location)
             
-            if (tappedNode.name) {
+            if ((tappedNode.name) != nil) {
                 if (tappedNode.name == "twentyFive") {
                     numColors = 25
                     gameMode = "Classic"
@@ -1444,11 +1444,11 @@ class StartMenuScene:SKScene {
         //gesture recognizers
         var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-        self.view.addGestureRecognizer(swipeRight)
+        self.view?.addGestureRecognizer(swipeRight)
         
         var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-        self.view.addGestureRecognizer(swipeLeft)
+        self.view?.addGestureRecognizer(swipeLeft)
         
     }
     
@@ -1456,20 +1456,20 @@ class StartMenuScene:SKScene {
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = ClassicMenuScene(size: self.scene.size)
+        let scene = ClassicMenuScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
         
     }
     
     func presentStressScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size: self.scene.size)
+        let scene = GameScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
         
     }
     
@@ -1477,10 +1477,10 @@ class StartMenuScene:SKScene {
     func zenGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = ZenMenuScene(size: self.scene.size)
+        let scene = ZenMenuScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
         
     }
     
@@ -1494,7 +1494,7 @@ class StartMenuScene:SKScene {
             let location = touch.locationInNode(self)
             let tappedNode = nodeAtPoint(location)
             
-            if (tappedNode.name) {
+            if ((tappedNode.name) != nil) {
                 if (tappedNode.name == "classic") {
 //                    numColors = 25
                     presentGameScene()
@@ -1637,20 +1637,20 @@ class GameFailScene: SKScene {
     func presentStartMenu() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Right, duration: 0.5)
         
-        let scene = StartMenuScene(size: self.scene.size)
+        let scene = StartMenuScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
     }
     
     
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size: self.scene.size)
+        let scene = GameScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
         
     }
     
@@ -1665,7 +1665,7 @@ class GameFailScene: SKScene {
             let location = touch.locationInNode(self)
             let tappedNode = nodeAtPoint(location)
 
-            if (tappedNode.name) {
+            if ((tappedNode.name) != nil) {
                 if (tappedNode.name == "exit") {
                     scoreLabelAdded = false;
                     sectLabelAdded = false;
@@ -1795,20 +1795,20 @@ class GameOverScene: SKScene {
     func presentStartMenu() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Right, duration: 0.5)
         
-        let scene = StartMenuScene(size: self.scene.size)
+        let scene = StartMenuScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
     }
     
     
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size: self.scene.size)
+        let scene = GameScene(size: UIScreen.mainScreen().bounds.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
-        self.scene.view.presentScene(scene, transition: transition)
+        self.scene?.view?.presentScene(scene, transition: transition)
         
     }
     
@@ -1823,7 +1823,7 @@ class GameOverScene: SKScene {
             let location = touch.locationInNode(self)
             let tappedNode = nodeAtPoint(location)
             
-            if (tappedNode.name) {
+            if ((tappedNode.name) != nil) {
                 if (tappedNode.name == "exit") {
 //                    scoreLabel.removeFromParent()
                     self.removeAllChildren()
