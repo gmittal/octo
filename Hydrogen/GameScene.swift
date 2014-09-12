@@ -114,6 +114,8 @@ class GameScene: SKScene {
     
     
     override func didMoveToView(view: SKView) {
+        self.view?.showsNodeCount = false;
+        self.view?.showsFPS = false;
         /* Setup your scene here */
         
 //        UIApplication.statusBarIsHidden = true;
@@ -980,6 +982,9 @@ class GameScene: SKScene {
 
 class ZenMenuScene:SKScene {
     override func didMoveToView(view: SKView) {
+        self.view?.showsNodeCount = false;
+        self.view?.showsFPS = false;
+        
         self.anchorPoint = CGPoint(x:0.5, y:0.5)
         self.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
@@ -1175,6 +1180,8 @@ class ZenMenuScene:SKScene {
 
 class ClassicMenuScene:SKScene {
     override func didMoveToView(view: SKView) {
+        self.view?.showsNodeCount = false;
+        self.view?.showsFPS = false;
         self.anchorPoint = CGPoint(x:0.5, y:0.5)
         self.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
@@ -1368,6 +1375,8 @@ class ClassicMenuScene:SKScene {
 
 class StartMenuScene:SKScene {
     override func didMoveToView(view: SKView) {
+        self.view?.showsNodeCount = false;
+        self.view?.showsFPS = false;
         self.anchorPoint = CGPoint(x:0.5, y:0.5)
         self.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
@@ -1550,6 +1559,8 @@ class StartMenuScene:SKScene {
 
 class GameFailScene: SKScene {
     override func didMoveToView(view: SKView) {
+        self.view?.showsNodeCount = false;
+        self.view?.showsFPS = false;
         self.anchorPoint = CGPoint(x:0.5, y:0.5)
         self.backgroundColor = UIColor(red: 0.91, green: 0.3, blue: 0.235, alpha: 1.0)
         
@@ -1700,6 +1711,8 @@ class GameFailScene: SKScene {
 
 class GameOverScene: SKScene {
     override func didMoveToView(view: SKView) {
+        self.view?.showsNodeCount = false;
+        self.view?.showsFPS = false;
         self.anchorPoint = CGPoint(x:0.5, y:0.5)
         self.backgroundColor = UIColor(red: 0.18, green: 0.8, blue: 0.44, alpha: 1.0)
         
