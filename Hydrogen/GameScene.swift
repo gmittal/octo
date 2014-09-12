@@ -118,8 +118,8 @@ class GameScene: SKScene {
         
 //        UIApplication.statusBarIsHidden = true;
         
-        selfHeight = self.view.bounds.size.height
-        selfWidth = self.view.bounds.size.width;
+        selfHeight = self.view?.bounds.size.height
+        selfWidth = self.view?.bounds.size.width;
 //        CGFloat boxHeight=box.bounds.size.height;
 //        CGFloat boxWidth=box.bounds.size.width;
         
@@ -732,7 +732,7 @@ class GameScene: SKScene {
             let location = touch.locationInNode(self)
             let tappedNode = nodeAtPoint(location)
             
-            if (tappedNode.name) {
+            if ((tappedNode.name) != nil) {
                 
                 if (tappedNode.name == "player") {
                     
@@ -950,7 +950,7 @@ class GameScene: SKScene {
     func gameOverTransition() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
         
-        let scene = GameOverScene(size: self.scene.size)
+        let scene = GameOverScene(size: self.scene?.size!)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene.view.presentScene(scene, transition: transition)
@@ -960,7 +960,7 @@ class GameScene: SKScene {
     func presentFailureScene() {
         let transition = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
         
-        let scene = GameFailScene(size: self.scene.size)
+        let scene = GameFailScene(size: self.scene?.size!)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene.view.presentScene(scene, transition: transition)
@@ -1063,18 +1063,18 @@ class ZenMenuScene:SKScene {
         //gesture recognizers
         var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-        self.view.addGestureRecognizer(swipeRight)
+        self.view?.addGestureRecognizer(swipeRight)
         
         var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-        self.view.addGestureRecognizer(swipeLeft)
+        self.view?.addGestureRecognizer(swipeLeft)
         
     }
     
     func exitToMenu() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = StartMenuScene(size: self.scene.size)
+        let scene = StartMenuScene(size: self.scene?.size!)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene.view.presentScene(scene, transition: transition)
@@ -1084,7 +1084,7 @@ class ZenMenuScene:SKScene {
     func presentGameScene() {
         let transition = SKTransition.crossFadeWithDuration(0.6)
         
-        let scene = GameScene(size: self.scene.size)
+        let scene = GameScene(size: self.scene?.size)
         scene.scaleMode = SKSceneScaleMode.AspectFill
         
         self.scene.view.presentScene(scene, transition: transition)
@@ -1101,7 +1101,7 @@ class ZenMenuScene:SKScene {
             let location = touch.locationInNode(self)
             let tappedNode = nodeAtPoint(location)
             
-            if (tappedNode.name) {
+            if ((tappedNode.name) != nil) {
                 if (tappedNode.name == "fifteen") {
                     numColors = 300
                     startTime = 15;
