@@ -35,7 +35,7 @@ var yellowBound2:CDouble = yellowBound1 + 45
 var greenBound1:CDouble = yellowBound2
 var greenBound2:CDouble = greenBound1 + 45
 
-var colorList:Array = [];
+var colorList:[String] = [];
 
 
 
